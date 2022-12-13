@@ -10,9 +10,7 @@
 
 #include "list.h"
 
-/* Functions for allocating and freeing lists. By using only these functions,
- * the user should be able to allocate and free all the memory required for
- * this linked list library. */
+
 list_t *list_alloc() 
 {
   list_t* list = (list_t*)malloc(sizeof(list_t));
