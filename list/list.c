@@ -78,56 +78,56 @@ int list_length(list_t *l)
 /* Methods for adding to the list. */
 void list_add_to_back(list_t *l, elem value) 
 {
-  node_t *newnode = node_alloc(value);
-  newnode->next = NULL;
-  if(l->head == NULL) 
-  {
-    l->head = newnode;
+  node_t *current = l->head;
+  if(l->head == NULL){
+    current->value = value; 
+    current->next = NULL; 
   }
   else
   {
-     node_t *current = l->head;
      while (current->next != NULL)
       {
         current = current->next;
       }
-      current->next = newnode;
+      current->next = (node_t *)malloc(sizeof(node_t));
+      current->next->value = value;
+      current->next->next= NULL;
   }
 
 }
 void list_add_to_front(list_t *l, elem value) 
-
 {
-   node_t *newnode;
-   newnode = node_alloc(value);
-   newnode->next =  l->head; 
-   l->head = newnode; 
+   node_t *new_node;
+   new_node = (node_t *)malloc(sizeof(node_t));
+   new_node -> value = value;
+   new_node->next =  l->head; 
+   l->head = new_node; 
 }
+
 void list_add_at_index(list_t *l, elem value, int index)
 {
-   int i =0; 
-   node_t *newnode = node_alloc(value);
-   node_t *current = l->head;
- 
-   if(index==0)
-   {
-     newnode->next = l->head;
-     l-> head= newnode;   
-   }
-
-   else
-
-   if (index > 0)
-   {
-     while(i < (index - 1) && current->next != NULL)
-     {
-       current = current->next;
-       i++; 
-     }
-
-     newnode->next = current->next;
-     current->next = newnode; 
-   } 
+if(l->head == NULL ){
+  l->head->value = value;
+  l->head->next = NULL; 
+}
+else{
+  node_t * new_node;
+  new_node = (node_t *)malloc(sizeof(node_t));
+  new_node->value = value;
+  int curr_index = 0;
+  node_t *current = l->head;
+  while(curr_index < index-1){
+    if(current->next == NULL){
+      current->next = new_node;
+      new_node->next = NULL; 
+      return ;
+    }
+    current = current->next;
+    curr_index++;
+  }
+  new_node->next = current->next;
+  current->next = new_node; 
+}
 
 }
 /* Methods for removing from the list. Returns the removed element. */
